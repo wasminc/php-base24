@@ -1,0 +1,48 @@
+{
+    "name": "carlosafonso/php-base24",
+    "type": "library",
+    "description": "A Base24 encoder and decoder",
+    "keywords": [
+        "carlosafonso",
+        "php-base24",
+        "base24"
+    ],
+    "homepage": "https://github.com/carlosafonso/php-base24",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Carlos Afonso",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "~7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : ">=8.0",
+        "squizlabs/php_codesniffer": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Afonso\\Base24\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Afonso\\Base24\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs src tests",
+        "fix-style": "phpcbf src tests"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
