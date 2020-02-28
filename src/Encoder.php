@@ -4,9 +4,23 @@ declare(strict_types=1);
 
 namespace Afonso\Base24;
 
+/**
+ * An encoder/decoder that uses the Base 24 binary-to-text encoding scheme.
+ */
 class Encoder
 {
+    /**
+     * The alphabet used by this encoder.
+     *
+     * @var string
+     */
     const ALPHABET = 'ZAC2B3EF4GH5TK67P8RS9WXY';
+
+    /**
+     * The length of the alphabet used by this encoder.
+     *
+     * @var int
+     */
     const ALPHABET_LENGTH = 24;
 
     private $encodeMap = [];
@@ -21,9 +35,19 @@ class Encoder
         }
     }
 
-    public function encode(array $str): string
+    /**
+     * Convert the given array of bytes into a Base 24-encoded string.
+     *
+     * The length of the input array must be a multiple of 4, otherwise this
+     * method will throw an exception.
+     *
+     * @param int[] $input
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    public function encode(array $input): string
     {
-        $dataLength = count($str);
+        $dataLength = count($input);
 
         if ($dataLength % 4 !== 0) {
             throw new \InvalidArgumentException('Input to encode must have a length multiple of 4');
@@ -34,10 +58,10 @@ class Encoder
             $j = $i * 4;
             $mask = 0xFF;
 
-            $b3 = $str[$j] & $mask;
-            $b2 = $str[$j + 1] & $mask;
-            $b1 = $str[$j + 2] & $mask;
-            $b0 = $str[$j + 3] & $mask;
+            $b3 = $input[$j] & $mask;
+            $b2 = $input[$j + 1] & $mask;
+            $b1 = $input[$j + 2] & $mask;
+            $b0 = $input[$j + 3] & $mask;
 
             $value = 0xFFFFFFFF &
                 (($b3 << 24) | ($b2 << 16) | ($b1 << 8) | $b0);
@@ -54,9 +78,19 @@ class Encoder
         return $result;
     }
 
-    public function decode(string $str): array
+    /**
+     * Convert the given Base 24-encoded string into an array of bytes.
+     *
+     * The length of the input string must be a multiple of 7, otherwise this
+     * method will throw an exception.
+     *
+     * @param string $input
+     * @return int[]
+     * @throws \InvalidArgumentException
+     */
+    public function decode(string $input): array
     {
-        $dataLength = strlen($str);
+        $dataLength = strlen($input);
 
         if ($dataLength % 7 !== 0) {
             throw new \InvalidArgumentException('Input to decode must have a length multiple of 7');
@@ -65,7 +99,7 @@ class Encoder
         $bytes = [];
         for ($i = 0; $i < $dataLength / 7; $i++) {
             $j = $i * 7;
-            $subData = substr($str, $j, 7);
+            $subData = substr($input, $j, 7);
             $value = 0;
 
             foreach (str_split($subData) as $s) {
