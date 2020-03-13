@@ -43,6 +43,13 @@ class EncoderTest extends \PHPUnit\Framework\TestCase
         $this->encoder->decode('A');
     }
 
+    public function testDecodeThrowsExceptionIfInputContainsCharacterNotInAlphabet(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Input to decode contains an invalid character');
+        $this->encoder->decode('ZZZZZZI');
+    }
+
     public function getTestData(): array
     {
         $mappings = [

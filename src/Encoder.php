@@ -103,6 +103,10 @@ class Encoder
             $value = 0;
 
             foreach (str_split($subData) as $s) {
+                if (array_key_exists($s, $this->decodeMap) === false) {
+                    throw new \InvalidArgumentException('Input to decode contains an invalid character');
+                }
+
                 $idx = $this->decodeMap[$s];
                 $value = self::ALPHABET_LENGTH * $value + $idx;
             }
