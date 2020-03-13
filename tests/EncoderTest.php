@@ -71,7 +71,7 @@ class EncoderTest extends \PHPUnit\Framework\TestCase
             ['25896984125478546598563251452658', '2fc28kta66wrst4xahrrcf237s8z']
         ];
 
-        $testDarta = [];
+        $testData = [];
 
         foreach ($mappings as $mapping) {
             $decoded = $mapping[0];
